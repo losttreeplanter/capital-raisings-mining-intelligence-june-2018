@@ -1,0 +1,146 @@
+---
+title: "Primary Metal Exposure"
+
+
+
+---
+
+ 
+
+```{r}
+library(tidyverse)
+
+primetalraw <- read_csv("C:/Users/mmccrae/Desktop/top 100 financings closed q1 june 2018 - Sheet5 (4).csv")
+
+glimpse(primetalraw)
+
+```
+
+
+Using Cookbook faceted on 46 from baseball. 
+
+
+```{r}
+
+
+primetalraw20m <- primetalraw %>% filter(FinalAmountUSD>15000000)
+
+
+ggplot(primetalraw20m, aes(x=FinalAmountUSD, y=Company)) +
+ geom_segment(aes(yend=Company), xend=0, colour="grey50") +
+ geom_point(size=3, aes(colour=PrimaryMetalExposure)) +
+# scale_colour_brewer(palette="Set1", limits=c("NL","AL")) +
+ theme_bw() +
+ theme(panel.grid.major.y = element_blank()) +
+ facet_grid(PrimaryMetalExposure ~ ., scales="free_y", space="free_y")
+
+
+
+```
+
+
+So above doesn't look good. Let's just do a bar chart coloured. 
+
+
+```{r}
+
+
+primetalraw20m <- primetalraw %>% filter(FinalAmountUSD>15000000)
+
+
+ggplot(primetalraw, aes(x=FinalAmountUSD, y=reorder(Company,FinalAmountUSD))) +
+ geom_segment(aes(yend=Company), xend=0, colour="grey50") +
+ geom_point(size=3, aes(colour=PrimaryMetalExposure)) +
+# scale_colour_brewer(palette="Set1", limits=c("NL","AL")) +
+ theme_bw() +
+ theme(panel.grid.major.y = element_blank()) 
+
+
+```
+
+
+
+```{r}
+
+
+primetalraw20m <- primetalraw %>% filter(FinalAmountUSD>15000000)
+
+
+ggplot(primetalraw20m, aes(x=FinalAmountUSD, y=Company)) +
+ geom_segment(aes(yend=Company), xend=0, colour="grey50") +
+ geom_point(size=3, aes(colour=PrimaryMetalExposure)) +
+# scale_colour_brewer(palette="Set1", limits=c("NL","AL")) +
+ theme_bw() +
+ theme(panel.grid.major.y = element_blank()) +
+ facet_wrap(~PrimaryMetalExposure,scales="free_y")
+
+
+
+```
+
+
+
+Try as a bar chart
+
+```{r}
+
+library(showtext)
+library(extrafont)
+library(scales)
+
+primetalraw15 <- primetalraw %>% filter(FinalAmountUSD>10000000)
+
+t <- ggplot(primetalraw15, aes(y=FinalAmountUSD, x=reorder(Company,FinalAmountUSD))) +
+  geom_bar(stat="identity")+
+  geom_text(aes(label=scales::dollar(FinalAmountUSD)), hjust=-.1)+
+  coord_flip()+
+  theme_minimal(base_size=16, base_family="Montserrat")+
+  scale_y_continuous(limits=c(0,500000000),labels = scales::dollar)+
+  scale_fill_manual(values=c('#a6cee3','#1f78b4','#b2df8a','#ff7f00','#fb9a99','#e31a1c','#fdbf6f','#33a02c','#cab2d6','#6a3d9a','#ffff99'))
+
+t
+
+ggsave("font_ggplot22.pdf", plot=t, width=300, height=300, units="mm")
+
+
+
+
+```
+
+
+
+Let's look at the data by commodity raised. 
+
+```{r}
+
+
+byprimary <- primetalraw %>% filter(FinalAmountUSD>10000000) %>% group_by(PrimaryMetalExposure) %>% summarise(Total = sum(FinalAmountUSD))
+byprimary
+
+
+```
+
+
+And chart
+
+
+```{r}
+
+z <- ggplot(byprimary, aes(y=Total, x=reorder(PrimaryMetalExposure,Total))) +
+  geom_bar(stat="identity")+
+  geom_text(aes(label=scales::dollar(Total)), hjust=-.1)+
+  coord_flip()+
+  theme_minimal(base_size=16, base_family="Montserrat")+
+  scale_y_continuous(limits=c(0,1100000000),labels = scales::dollar)
+
+z
+
+ggsave("font_ggplot30.pdf", plot=z, width=300, height=300, units="mm")
+
+
+
+```
+
+
+
+

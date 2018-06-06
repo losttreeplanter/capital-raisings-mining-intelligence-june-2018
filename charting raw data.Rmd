@@ -1,0 +1,152 @@
+---
+title: "June 2018 capital raisings"
+
+
+
+---
+
+ 
+
+```{r}
+library(tidyverse)
+
+rawcap <- read_csv("C:/Users/mmccrae/Desktop/companies-capitalraisings-june-2018-two.csv")
+
+glimpse(rawcap)
+
+```
+
+
+Let's fix the dates and just take Q1 2018
+
+
+```{r}
+
+capformat <- rawcap %>% separate(ClosedDate, c("ClosedMonth","ClosedMonthDay","ClosedMonthYear", sep=" ", na.rm = TRUE))
+
+glimpse(capformat)
+
+q1_2018 <- capformat %>% filter(ClosedMonthYear==2018) %>% filter(ClosedMonth %in% c("Jan","Feb","Mar"))
+
+q1_2018
+
+
+```
+
+
+
+
+
+
+Let's histogram for distribution. 
+
+
+```{r}
+
+library(scales)
+
+ggplot (q1_2018,aes(FinalAmountUSD))+
+  geom_histogram()+
+  scale_x_continuous(labels = scales::dollar)
+
+```
+
+
+
+
+
+Let's graph the financings in points to see distribution close up.
+
+```{r}
+
+library(scales)
+
+ggplot (q1_2018,aes(FinalAmountUSD))+
+  geom_histogram()+
+  scale_x_continuous(labels = scales::dollar, limits=c(0,25000000))
+  
+  
+
+```
+
+
+Let's get top 100 raisings. 
+
+
+```{r}
+
+top100raisings <-  q1_2018 %>% top_n(100,FinalAmountUSD) %>% select(Company,FinalAmountUSD, Agents, Activities, FinancingType) %>% arrange(desc(FinalAmountUSD))
+top100raisings
+
+View(top100raisings)
+
+write.csv2(top100raisings, file="top 100 financings from r two")
+
+
+```
+
+
+Graph top 50 with FinancingType
+
+
+```{r}
+
+ggplot(top50raisings, aes(reorder(Company,FinalAmountUSD), FinalAmountUSD, fill=FinancingType))+
+  geom_bar(stat="identity") +
+  coord_flip() +
+  scale_y_continuous(labels = scales::dollar)
+
+
+
+```
+
+Diversion. Looking at top financings in 2017.
+
+
+```{r}
+
+
+
+year_2017 <- capformat %>% filter(ClosedMonthYear==2017) 
+
+top50raisings2017 <-  year_2017 %>% top_n(50,FinalAmountUSD) %>% select(Company,FinalAmountUSD, Activities, FinancingType) %>% arrange(desc(FinalAmountUSD)) %>% 
+top50raisings2017
+
+
+```
+
+Looking at top closed in 2017
+
+
+```{r}
+
+ggplot(top50raisings2017, aes(reorder(Company,FinalAmountUSD), FinalAmountUSD, fill=FinancingType))+
+  geom_bar(stat="identity") +
+  coord_flip() +
+  scale_y_continuous(labels = scales::dollar)
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
