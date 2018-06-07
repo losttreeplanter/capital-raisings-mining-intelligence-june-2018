@@ -16,6 +16,8 @@ p <- ggplot(mtcars, aes(x=wt, y=mpg)) + geom_point() +
   theme(text=element_text(size=16, family="Montserrat"))
 
 ggsave("font_ggplot5.pdf", plot=p,  width=4, height=4)
+
+fonttable()
 ```
 
 

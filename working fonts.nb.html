@@ -175,7 +175,7 @@ $(document).ready(function () {
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShzaG93dGV4dClcbmxpYnJhcnkoZXh0cmFmb250KVxuXG5saWJyYXJ5KGdncGxvdDIpXG5wIDwtIGdncGxvdChtdGNhcnMsIGFlcyh4PXd0LCB5PW1wZykpICsgZ2VvbV9wb2ludCgpICtcbiAgZ2d0aXRsZShcIkZ1ZWwgRWZmaWNpZW5jeSBvZiAzMiBDYXJzXCIpICtcbiAgeGxhYihcIldlaWdodCAoeDEwMDAgbGIpXCIpICsgeWxhYihcIk1pbGVzIHBlciBHYWxsb25cIikgK1xuICB0aGVtZSh0ZXh0PWVsZW1lbnRfdGV4dChzaXplPTE2LCBmYW1pbHk9XCJNb250c2VycmF0XCIpKVxuXG5nZ3NhdmUoXCJmb250X2dncGxvdDUucGRmXCIsIHBsb3Q9cCwgIHdpZHRoPTQsIGhlaWdodD00KVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShzaG93dGV4dClcbmxpYnJhcnkoZXh0cmFmb250KVxuXG5saWJyYXJ5KGdncGxvdDIpXG5wIDwtIGdncGxvdChtdGNhcnMsIGFlcyh4PXd0LCB5PW1wZykpICsgZ2VvbV9wb2ludCgpICtcbiAgZ2d0aXRsZShcIkZ1ZWwgRWZmaWNpZW5jeSBvZiAzMiBDYXJzXCIpICtcbiAgeGxhYihcIldlaWdodCAoeDEwMDAgbGIpXCIpICsgeWxhYihcIk1pbGVzIHBlciBHYWxsb25cIikgK1xuICB0aGVtZSh0ZXh0PWVsZW1lbnRfdGV4dChzaXplPTE2LCBmYW1pbHk9XCJNb250c2VycmF0XCIpKVxuXG5nZ3NhdmUoXCJmb250X2dncGxvdDUucGRmXCIsIHBsb3Q9cCwgIHdpZHRoPTQsIGhlaWdodD00KVxuXG5mb250dGFibGUoKVxuYGBgIn0= -->
 <pre class="r"><code>library(showtext)
 library(extrafont)
 
@@ -185,13 +185,15 @@ p &lt;- ggplot(mtcars, aes(x=wt, y=mpg)) + geom_point() +
   xlab(&quot;Weight (x1000 lb)&quot;) + ylab(&quot;Miles per Gallon&quot;) +
   theme(text=element_text(size=16, family=&quot;Montserrat&quot;))
 
-ggsave(&quot;font_ggplot5.pdf&quot;, plot=p,  width=4, height=4)</code></pre>
+ggsave(&quot;font_ggplot5.pdf&quot;, plot=p,  width=4, height=4)
+
+fonttable()</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIndvcmtpbmcgZm9udHMiDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQoNCg0KYGBge3J9DQpsaWJyYXJ5KHNob3d0ZXh0KQ0KbGlicmFyeShleHRyYWZvbnQpDQoNCmxpYnJhcnkoZ2dwbG90MikNCnAgPC0gZ2dwbG90KG10Y2FycywgYWVzKHg9d3QsIHk9bXBnKSkgKyBnZW9tX3BvaW50KCkgKw0KICBnZ3RpdGxlKCJGdWVsIEVmZmljaWVuY3kgb2YgMzIgQ2FycyIpICsNCiAgeGxhYigiV2VpZ2h0ICh4MTAwMCBsYikiKSArIHlsYWIoIk1pbGVzIHBlciBHYWxsb24iKSArDQogIHRoZW1lKHRleHQ9ZWxlbWVudF90ZXh0KHNpemU9MTYsIGZhbWlseT0iTW9udHNlcnJhdCIpKQ0KDQpnZ3NhdmUoImZvbnRfZ2dwbG90NS5wZGYiLCBwbG90PXAsICB3aWR0aD00LCBoZWlnaHQ9NCkNCmBgYA0KDQoNCg==</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIndvcmtpbmcgZm9udHMiDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQoNCg0KYGBge3J9DQpsaWJyYXJ5KHNob3d0ZXh0KQ0KbGlicmFyeShleHRyYWZvbnQpDQoNCmxpYnJhcnkoZ2dwbG90MikNCnAgPC0gZ2dwbG90KG10Y2FycywgYWVzKHg9d3QsIHk9bXBnKSkgKyBnZW9tX3BvaW50KCkgKw0KICBnZ3RpdGxlKCJGdWVsIEVmZmljaWVuY3kgb2YgMzIgQ2FycyIpICsNCiAgeGxhYigiV2VpZ2h0ICh4MTAwMCBsYikiKSArIHlsYWIoIk1pbGVzIHBlciBHYWxsb24iKSArDQogIHRoZW1lKHRleHQ9ZWxlbWVudF90ZXh0KHNpemU9MTYsIGZhbWlseT0iTW9udHNlcnJhdCIpKQ0KDQpnZ3NhdmUoImZvbnRfZ2dwbG90NS5wZGYiLCBwbG90PXAsICB3aWR0aD00LCBoZWlnaHQ9NCkNCg0KZm9udHRhYmxlKCkNCmBgYA0KDQoNCg==</div>
 
 
 

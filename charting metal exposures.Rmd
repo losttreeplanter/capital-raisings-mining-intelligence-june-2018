@@ -10,7 +10,7 @@ title: "Primary Metal Exposure"
 ```{r}
 library(tidyverse)
 
-primetalraw <- read_csv("C:/Users/mmccrae/Desktop/top 100 financings closed q1 june 2018 - Sheet5 (4).csv")
+primetalraw <- read_csv("C:/Users/Admin/Downloads/top 100 financings closed q1 june 2018 - Sheet5.csv")
 
 glimpse(primetalraw)
 
@@ -126,21 +126,51 @@ And chart
 
 ```{r}
 
+
+
 z <- ggplot(byprimary, aes(y=Total, x=reorder(PrimaryMetalExposure,Total))) +
   geom_bar(stat="identity")+
-  geom_text(aes(label=scales::dollar(Total)), hjust=-.1)+
+  geom_text(aes(label=scales::dollar(Total)), hjust=-.1, family="Montserrat")+
   coord_flip()+
-  theme_minimal(base_size=16, base_family="Montserrat")+
-  scale_y_continuous(limits=c(0,1100000000),labels = scales::dollar)
+  theme_minimal(base_size=14, base_family="Montserrat")+
+  theme(plot.title = element_text(size = rel(2.5), family="Zilla Slab Light"))+
+  scale_y_continuous(limits=c(0,1000000000),labels = scales::dollar, breaks=c(0,250000000,500000000,750000000))+
+  labs(title="Financings by Commodity Q1 2018", subtitle="Total Closed Financings for Companies by Their Primary Commodity. Amounts over $10M.",x="", y="", caption="Data from Mining Intelligence")
 
 z
 
-ggsave("font_ggplot30.pdf", plot=z, width=300, height=300, units="mm")
+ggsave("financecommo15.pdf", plot=z, width=250, height=200, units="mm")
 
 
 
 ```
 
 
+Bar chart with proper formatting. 
 
+
+```{r}
+
+library(showtext)
+library(extrafont)
+library(scales)
+
+primetalraw15 <- primetalraw %>% filter(FinalAmountUSD>10000000)
+
+t <- ggplot(primetalraw15, aes(y=FinalAmountUSD, x=reorder(Company,FinalAmountUSD))) +
+  geom_bar(stat="identity")+
+  geom_text(aes(label=scales::dollar(FinalAmountUSD)), hjust=-.1)+
+  coord_flip()+
+  theme_minimal(base_size=14, base_family="Montserrat")+
+  theme(plot.title = element_text(size = rel(2.5), family="Zilla Slab Light"))+
+  scale_y_continuous(limits=c(0,500000000),labels = scales::dollar, breaks=c(0,200000000,400000000)) +
+  labs(title="Top Financings in Q1 2018", subtitle="Closed Financings over $10M", x="", y="")
+t
+
+ggsave("topfinance15.pdf", plot=t, width=250, height=200, units="mm")
+
+
+
+
+```
 
