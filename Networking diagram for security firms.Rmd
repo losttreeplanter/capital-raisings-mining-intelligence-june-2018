@@ -1,0 +1,119 @@
+---
+title: "blank"
+
+
+
+---
+
+ 
+
+```{r}
+library(tidyverse)
+
+library(readr)
+agentsrawnodupes <- read_csv("agentsrawnodupestwo.csv")
+View(agentsrawnodupes)
+
+
+```
+
+
+Let's separate the Agents column. 
+
+```{r}
+
+sepagents <- agentsrawnodupes %>% separate(Agents, into=c("Agents1","Agents2","Agents3","Agents4"), sep="[|]",)
+sepagents
+
+```
+
+
+Let's separate and put Agents in one variable. 
+
+```{r}
+
+gathagents <- sepagents %>% gather(AgentsLong, AgentsLongAlso, Agents1:Agents4)
+gathagents
+
+
+```
+
+ 
+ Use variables that matter. Drop NA values. 
+ 
+```{r}
+
+agentsclean <- gathagents %>% select(Company, FinalAmountUSD, AgentsLongAlso, ClosedMonth, ClosedMonthYear) %>%  mutate(FinalAmountUSDFactor=as.factor(FinalAmountUSD)) %>% drop_na()
+agentsclean
+
+```
+ 
+ List of total agents
+ 
+```{r}
+
+
+uniqueagents <- agentsclean %>% distinct(AgentsLongAlso)
+uniqueagents
+
+
+```
+ 
+ 
+  Largest deals descending
+ 
+ 
+```{r}
+
+agentscleanmodel<- agentsclean %>% arrange(desc(FinalAmountUSD)) %>% select(Company, FinalAmountUSD, AgentsLongAlso) 
+agentscleanmodel
+
+
+```
+
+
+What agent did the most deals? 
+
+
+```{r}
+
+
+countagents <- agentscleanmodel %>% count(AgentsLongAlso) %>% arrange(desc(n))
+countagents
+
+
+```
+
+
+What agents were involved with the largest financings?
+
+Let's graph some Agents in a bar chart.
+
+```{r}
+
+library(scales)
+
+agentscleanmodelCanaccord <- agentscleanmodel %>% filter(AgentsLongAlso %in% c("Canaccord Genuity Corp."))
+
+ggplot(agentscleanmodelCanaccord, aes(x=reorder(Company,FinalAmountUSD), y=FinalAmountUSD))+
+  geom_bar(stat="identity")+
+  coord_flip() +
+  labs(title="Canaccord Genuity Corp.")+
+  scale_y_continuous(labels = scales::dollar)+
+  facet_grid(AgentsLongAlso~., scales="free")
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
